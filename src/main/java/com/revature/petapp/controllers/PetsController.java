@@ -1,6 +1,7 @@
 package com.revature.petapp.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,9 +49,9 @@ public class PetsController {
 	
 	@GetMapping(path="/{petId}")
 	public ResponseEntity<Pet> getPetById(@PathVariable int petId) {
-		Pet pet = userServ.getPetById(petId);
-		if (pet != null) {
-			return ResponseEntity.ok(pet);
+		Optional<Pet> petOpt = userServ.getPetById(petId);
+		if (petOpt.isPresent()) {
+			return ResponseEntity.ok(petOpt.get());
 		} else {
 			return ResponseEntity.notFound().build();
 		}
@@ -58,14 +59,21 @@ public class PetsController {
 	
 	@PutMapping(path="/{petId}/adopt")
 	public ResponseEntity<User> adoptPet(@PathVariable int petId, @RequestBody User user) {
-		Pet petToAdopt = userServ.getPetById(petId);
+		Optional<Pet> petOpt = userServ.getPetById(petId);
 		
 		try {
-			user = userServ.adoptPet(user, petToAdopt);
-			return ResponseEntity.ok(user);
+			if (petOpt.isPresent()) {
+				Pet petToAdopt = petOpt.get();
+				user = userServ.adoptPet(user, petToAdopt);
+				return ResponseEntity.ok(user);
+			} else {
+				return ResponseEntity.notFound().build();
+			}
 		} catch (AlreadyAdoptedException e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.badRequest().build();
 		}
 	}

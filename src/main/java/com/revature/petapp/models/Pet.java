@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Pet {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column // the column annotation is unnecessary if the name is the same
 	private int id;
 	@Column

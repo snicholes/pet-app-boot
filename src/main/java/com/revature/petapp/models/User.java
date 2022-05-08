@@ -20,7 +20,7 @@ import javax.persistence.Transient;
 @Table(name="person") // this annotation is only necessary when the name is different
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String username;
 	@Column(name="passwd")

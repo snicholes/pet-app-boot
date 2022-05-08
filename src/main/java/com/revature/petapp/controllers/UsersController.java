@@ -1,5 +1,7 @@
 package com.revature.petapp.controllers;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,14 +34,15 @@ public class UsersController {
 			user = userServ.register(user);
 			return ResponseEntity.ok(user);
 		} catch (UsernameAlreadyExistsException e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 	}
 	
 	@GetMapping(path="/{id}")
 	public ResponseEntity<User> getUserById(@PathVariable("id") int userId) {
-		User user = userServ.getUserById(userId);
-		if (user != null) return ResponseEntity.ok(user);
+		Optional<User> userOpt = userServ.getUserById(userId);
+		if (userOpt.isPresent()) return ResponseEntity.ok(userOpt.get());
 		else return ResponseEntity.notFound().build();
 	}
 

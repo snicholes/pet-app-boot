@@ -1,6 +1,7 @@
 package com.revature.petapp.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.revature.petapp.exceptions.AlreadyAdoptedException;
 import com.revature.petapp.exceptions.IncorrectCredentialsException;
@@ -69,12 +70,12 @@ public interface UserService {
 	 * @param id
 	 * @return the pet with the specified ID
 	 */
-	public Pet getPetById(int id);
+	public Optional<Pet> getPetById(int id);
 	
 	/**
 	 * 
 	 * @param id
 	 * @return the user with the specified ID
 	 */
-	public User getUserById(int id);
+	public Optional<User> getUserById(int id);
 }

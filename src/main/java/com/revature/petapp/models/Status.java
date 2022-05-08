@@ -10,7 +10,7 @@ import javax.persistence.Id;
 @Entity
 public class Status {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int id;
 	public String name;
 	

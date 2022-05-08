@@ -3,6 +3,7 @@ package com.revature.petapp.services;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,8 +103,9 @@ public class UserServiceImpl implements UserService {
 		if (petToAdopt.getStatus().getName().equals("Adopted")) {
 			throw new AlreadyAdoptedException();
 		} else {
-			user = getUserById(user.getId());
-			if (user != null) {
+			Optional<User> userOpt = getUserById(user.getId());
+			if (userOpt.isPresent()) {
+				user = userOpt.get();
 				// proceed with adopting
 				Status adoptedStatus = statusRepo.findByName("Adopted");
 				petToAdopt.setStatus(adoptedStatus);
@@ -116,14 +118,18 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Pet getPetById(int id) {
-		return petRepo.findById(id).get();
+	public Optional<Pet> getPetById(int id) {
+		return petRepo.findById(id);
 	}
 	
 	@Override
-	public User getUserById(int id) {
-		User user = userRepo.findById(id).get();
-		user.setFullName(user.getFullName());
-		return user;
+	public Optional<User> getUserById(int id) {
+		Optional<User> userOpt = userRepo.findById(id);
+		if (userOpt.isPresent()) {
+			User user = userOpt.get();
+			user.setFullName(user.getFullName());
+			return Optional.of(user);
+		}
+		return userOpt;
 	}
 }
