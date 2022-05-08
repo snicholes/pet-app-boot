@@ -1,0 +1,20 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  security:
+    enabled: false
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    password: rev1910
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=pet_app1
+    username: postgres
+  jpa:
+    database: POSTGRESQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  sql:
+    init:
+      platform: postgres
