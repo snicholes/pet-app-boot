@@ -26,7 +26,7 @@ import com.revature.petapp.services.UserService;
 // (this means that the methods return resources instead of views)
 @RestController
 @RequestMapping(path="/pets") // all endpoints in this class start with /pets
-@CrossOrigin(origins="http://localhost:4200") // where we're accepting requests from
+@CrossOrigin(origins="*") // where we're accepting requests from
 public class PetsController {
 	private UserService userServ;
 	

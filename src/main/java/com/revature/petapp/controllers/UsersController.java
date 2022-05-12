@@ -19,7 +19,7 @@ import com.revature.petapp.services.UserService;
 
 @RestController
 @RequestMapping(path="/users")
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="*")
 public class UsersController {
 	private UserService userServ;
 	
